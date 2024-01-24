@@ -72,6 +72,8 @@ router.post("/create", userAuth, async (req, res) => {
           $inc: { seq: 1 },
         }
       );
+      console.log("🚀 ~ router.post ~ counterRes:", counterRes)
+      
       let problemId = counterRes.seq;
       let problem = new Problem({
         author: userId,

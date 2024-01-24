@@ -181,7 +181,9 @@ router.post("/compileAndRun", userAuth, async (req, res) => {
         problemJSON.published.testcases[i].input.url +
         " " +
         clientCodeResult.body.output;
+        console.log("🚀 ~ router.post ~ program:", program)
       const checkerCodeResult = await complieAndRunHelper(program);
+      console.log("🚀 ~ router.post ~ checkerCodeResult:", checkerCodeResult)
 
       if (checkerCodeResult.body.output[0] != "1") {
         verdictName = "wa";

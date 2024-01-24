@@ -25,7 +25,7 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ success: false, message: "Password and confirm password must be same" });
   }
   // If user already exists but has not confirmed email address then remove from database.
-  await User.deleteOne({ email: req.body.email, isConfirmed: false });
+  // await User.deleteOne({ email: req.body.email, isConfirmed: false });
 
   const user = new User({
     email: req.body.email,
@@ -43,31 +43,31 @@ router.post("/register", async (req, res) => {
     const token = jwt.sign({ email: req.body.email, type: "verify" }, process.env.TOKEN_SECRET, {
       expiresIn: "1h",
     });
-    const url = `${SERVER_URL}/users/verify/${token}`;
-    const replacements = {
-      username: req.body.username,
-      verifyUrl: url,
-    };
-    const htmlToSend = verifyEmailTemplate(replacements);
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: req.body.email,
-      subject: "Please confirm your email address",
-      attachments: [
-        {
-          filename: "logo192.png",
-          path: __dirname + "/../utils/emailTemplates/logo192.png",
-          cid: "logo",
-        },
-      ],
-      html: htmlToSend,
-    };
-    const info = await sendMail(mailOptions);
-    if (!info.success) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Internal server error. Can't send confirmation mail. Please try again." });
-    }
+    // const url = `${SERVER_URL}/users/verify/${token}`;
+    // const replacements = {
+    //   username: req.body.username,
+    //   verifyUrl: url,
+    // };
+    //const htmlToSend = verifyEmailTemplate(replacements);
+    // const mailOptions = {
+    //   from: process.env.EMAIL_USER,
+    //   to: req.body.email,
+    //   subject: "Please confirm your email address",
+    //   attachments: [
+    //     {
+    //       filename: "logo192.png",
+    //       path: __dirname + "/../utils/emailTemplates/logo192.png",
+    //       cid: "logo",
+    //     },
+    //   ],
+    //   html: htmlToSend,
+    // };
+    // const info = await sendMail(mailOptions);
+    // if (!info.success) {
+    //   return res
+    //     .status(500)
+    //     .json({ success: false, message: "Internal server error. Can't send confirmation mail. Please try again." });
+    // }
     return res.status(200).json({ success: true, message: "Your account has been created successfully." });
   });
 });

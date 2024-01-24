@@ -79,9 +79,13 @@ const problemRouter = require("./routes/problemRouter");
 app.use("/problem", problemRouter);
 
 // --------------- Connect to MongoDB ---------------
-const uri = process.env.ATLAS_URI;
+const uri = "mongodb+srv://plandaeta:p2da2t2@cluster0.xewtikf.mongodb.net/?retryWrites=true&w=majority"; 
 mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'test', // Replace with your actual database name if different
+  })
   .then(() => {
     console.log("MongoDB database connection established successfully");
   })
